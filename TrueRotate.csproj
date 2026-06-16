@@ -7,7 +7,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>RotatePlus</RootNamespace>
+    <AssemblyName>TrueRotate</AssemblyName>
+    <RootNamespace>TrueRotate</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 

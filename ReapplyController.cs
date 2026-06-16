@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 /// <summary>
 /// Watches for WM_DISPLAYCHANGE events and re-applies the user's desired
@@ -92,7 +92,7 @@ internal sealed class ReapplyController : IDisposable
             {
                 _thrashPaused = true;
                 _showWarning(
-                    "rotate+ — orientation fighting",
+                    "TrueRotate — orientation fighting",
                     "Couldn't hold orientation — the display keeps reverting. " +
                     "Auto-reapply is paused. Trigger a rotation or restart the app to re-enable.");
                 return;
@@ -104,7 +104,7 @@ internal sealed class ReapplyController : IDisposable
             }
             catch (Exception ex)
             {
-                _showWarning("rotate+ — reapply failed", ex.Message);
+                _showWarning("TrueRotate — reapply failed", ex.Message);
             }
         }
 

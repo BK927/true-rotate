@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-using RotatePlus;
+using TrueRotate;
 using Windows.Win32;
 
 if (args.Length > 0)
@@ -13,7 +13,7 @@ if (args.Length > 0)
 
 // ── Tray mode ────────────────────────────────────────────────────────────────
 bool createdNew;
-using var mutex = new Mutex(initiallyOwned: true, @"Global\rotate+_singleton", out createdNew);
+using var mutex = new Mutex(initiallyOwned: true, @"Global\TrueRotate_singleton", out createdNew);
 if (!createdNew)
     return;  // Another instance is already running.
 
@@ -79,9 +79,9 @@ static void RunCli(string[] args)
     }
 
     Console.Error.WriteLine("Usage:");
-    Console.Error.WriteLine("  rotatePlus list");
-    Console.Error.WriteLine("  rotatePlus set <index> <0|90|180|270>");
-    Console.Error.WriteLine("  rotatePlus test <index>");
+    Console.Error.WriteLine("  TrueRotate list");
+    Console.Error.WriteLine("  TrueRotate set <index> <0|90|180|270>");
+    Console.Error.WriteLine("  TrueRotate test <index>");
 }
 
 static void ListMonitors()

@@ -3,7 +3,7 @@ using Windows.Win32.Devices.Display;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 public sealed class MonitorInfo
 {

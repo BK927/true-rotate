@@ -1,7 +1,7 @@
 using System.Windows.Forms;
 using Windows.Win32.Foundation;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 /// <summary>
 /// A hidden native window whose sole job is to receive WM_HOTKEY and
@@ -27,7 +27,7 @@ internal sealed class HotkeyWindow : NativeWindow, IDisposable
         // queued thread message dispatched to a normal window via the message loop.
         CreateHandle(new CreateParams
         {
-            Caption = "rotate+ hotkey sink",
+            Caption = "TrueRotate hotkey sink",
             Style   = 0,           // WS_OVERLAPPED, no WS_VISIBLE → never shown
             ExStyle = 0x00000080,  // WS_EX_TOOLWINDOW → no taskbar entry
         });

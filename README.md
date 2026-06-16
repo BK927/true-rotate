@@ -1,8 +1,8 @@
-# rotate+
+# TrueRotate
 
 **A modern Windows display-rotation tray app that fixes the NVIDIA mouse-axis bug.**
 
-rotate+ lives in your system tray and rotates any monitor (0° / 90° / 180° / 270°) from a
+TrueRotate lives in your system tray and rotates any monitor (0° / 90° / 180° / 270°) from a
 global hotkey or the tray menu. It's a modern replacement for the old *iRotate* utility, built
 to solve the one problem iRotate never could:
 
@@ -10,7 +10,7 @@ to solve the one problem iRotate never could:
 > moving along the wrong axis**, with parts of the screen the cursor can't reach ("dead
 > zones"). The breakage is semi-permanent — it survives reboots.
 
-rotate+ neutralizes this on every rotation. See [How the fix works](#how-the-fix-works).
+TrueRotate neutralizes this on every rotation. See [How the fix works](#how-the-fix-works).
 
 ## Features
 
@@ -19,8 +19,8 @@ rotate+ neutralizes this on every rotation. See [How the fix works](#how-the-fix
 - **Per-monitor memory** — remembers each monitor's orientation (keyed by a stable device id)
   and restores it.
 - **Auto-reapply** — when something resets a monitor's orientation (e.g. the NVIDIA app),
-  rotate+ restores your chosen orientation automatically, through the cured path. See
-  [Rotate with rotate+, not other tools](#-rotate-with-rotate-not-other-tools).
+  TrueRotate restores your chosen orientation automatically, through the cured path. See
+  [Rotate with TrueRotate, not other tools](#-rotate-with-truerotate-not-other-tools).
 - **Rotate target** — hotkeys act on the monitor under the cursor, the primary monitor, or all
   monitors (your choice).
 - **Start with Windows** — optional autostart.
@@ -34,7 +34,7 @@ Build from source — needs the [.NET 10 SDK](https://dotnet.microsoft.com/downl
 
 ```sh
 dotnet build -c Release
-# → bin/Release/net10.0-windows/RotatePlus.exe
+# → bin/Release/net10.0-windows/TrueRotate.exe
 ```
 
 Or produce a standalone exe that needs no installed runtime:
@@ -43,7 +43,7 @@ Or produce a standalone exe that needs no installed runtime:
 dotnet publish -c Release -r win-x64 --self-contained
 ```
 
-Run `RotatePlus.exe`. It starts in the system tray — check the hidden-icons **^** overflow and
+Run `TrueRotate.exe`. It starts in the system tray — check the hidden-icons **^** overflow and
 drag it out to keep it visible.
 
 ## Usage
@@ -73,19 +73,19 @@ Open **Settings…** from the tray to:
 - Toggle **Start with Windows**.
 - Toggle **Auto-reapply on display change**.
 
-Settings are stored in `%AppData%\rotate+\config.json`.
+Settings are stored in `%AppData%\TrueRotate\config.json`.
 
-## ⚠️ Rotate with rotate+, not other tools
+## ⚠️ Rotate with TrueRotate, not other tools
 
-rotate+ **enforces** the orientation you set in it. If you rotate a monitor through the
-**NVIDIA app or Windows Settings**, rotate+ reverts it to the orientation you last set in
-rotate+.
+TrueRotate **enforces** the orientation you set in it. If you rotate a monitor through the
+**NVIDIA app or Windows Settings**, TrueRotate reverts it to the orientation you last set in
+TrueRotate.
 
-This is deliberate. Other tools rotate *without* applying rotate+'s cursor cure, so they would
-bring the mouse-axis bug back. By reverting and re-applying through its own cured path, rotate+
+This is deliberate. Other tools rotate *without* applying TrueRotate's cursor cure, so they would
+bring the mouse-axis bug back. By reverting and re-applying through its own cured path, TrueRotate
 keeps the cursor correct.
 
-**So change orientation from rotate+ (hotkey or tray menu), not from external tools.** If you
+**So change orientation from TrueRotate (hotkey or tray menu), not from external tools.** If you
 really need an external tool to change orientation, turn **Auto-reapply** off first (tray menu
 or Settings).
 
@@ -96,7 +96,7 @@ orientation value (CCD, GDI bounds, and legacy DEVMODE all agree) — but the **
 coordinate transform is not rebuilt**, so the cursor stays mapped to the old orientation (wrong
 axis + dead zones).
 
-rotate+ rotates via the CCD API with the **`SDC_FORCE_MODE_ENUMERATION`** flag, which forces a
+TrueRotate rotates via the CCD API with the **`SDC_FORCE_MODE_ENUMERATION`** flag, which forces a
 mode re-enumeration and rebuilds the cursor transform on every rotation — neutralizing the bug
 rather than trying to remove it. (Legacy `ChangeDisplaySettingsEx` is blocked by the driver, so
 CCD is the only working route.)
@@ -109,9 +109,9 @@ The same executable doubles as a CLI for verification/recovery (output appears i
 terminal):
 
 ```sh
-RotatePlus.exe list                        # list monitors + current rotation
-RotatePlus.exe set <index> <0|90|180|270>  # rotate a monitor
-RotatePlus.exe test <index>                # round-trip rotation self-test
+TrueRotate.exe list                        # list monitors + current rotation
+TrueRotate.exe set <index> <0|90|180|270>  # rotate a monitor
+TrueRotate.exe test <index>                # round-trip rotation self-test
 ```
 
 ## Limitations

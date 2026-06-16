@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 /// <summary>
 /// Modal settings dialog.  Lets the user rebind hotkeys, choose the rotation
@@ -47,7 +47,7 @@ internal sealed class SettingsForm : Form
         _bindings[3] = hk.Rotate270.Clone();
 
         // ── Form properties ──────────────────────────────────────────────────
-        Text            = "rotate+ Settings";
+        Text            = "TrueRotate Settings";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox     = false;
         MinimizeBox     = false;
@@ -294,7 +294,7 @@ internal sealed class SettingsForm : Form
         if (!candidate.IsValid())
         {
             MessageBox.Show($"Key '{keyName}' is not supported as a hotkey.",
-                "rotate+ Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                "TrueRotate Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -319,7 +319,7 @@ internal sealed class SettingsForm : Form
                 MessageBox.Show(
                     $"Binding for Rotate {ActionLabels[i]} (\"{_bindings[i].DisplayText}\") is invalid. " +
                     "Each binding needs at least one modifier and a valid key.",
-                    "rotate+ Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "TrueRotate Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -334,7 +334,7 @@ internal sealed class SettingsForm : Form
                     $"Duplicate hotkey: \"{_bindings[i].DisplayText}\" is used for both " +
                     $"Rotate {ActionLabels[i]} and Rotate {ActionLabels[j]}. " +
                     "Please assign unique combos before saving.",
-                    "rotate+ Settings — conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "TrueRotate Settings — conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -369,7 +369,7 @@ internal sealed class SettingsForm : Form
         {
             MessageBox.Show(
                 $"Could not update autostart registry entry:\n{ex.Message}",
-                "rotate+ Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                "TrueRotate Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             // Continue — other settings are already saved
         }
 

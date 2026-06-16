@@ -1,10 +1,10 @@
 using System.Drawing;
 using System.Windows.Forms;
-using RotatePlus;
+using TrueRotate;
 using Windows.Win32;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 /// <summary>
 /// Owns the system-tray icon, context menu, and global hotkeys.
@@ -31,7 +31,7 @@ internal sealed class TrayContext : ApplicationContext
         _tray = new NotifyIcon
         {
             Icon    = CreatePlaceholderIcon(),
-            Text    = "rotate+",
+            Text    = "TrueRotate",
             Visible = true,
         };
 
@@ -133,7 +133,7 @@ internal sealed class TrayContext : ApplicationContext
         {
             _tray.ShowBalloonTip(
                 timeout:  4000,
-                tipTitle: "rotate+ — rotation failed",
+                tipTitle: "TrueRotate — rotation failed",
                 tipText:  ex.Message,
                 tipIcon:  ToolTipIcon.Error);
         }
@@ -165,7 +165,7 @@ internal sealed class TrayContext : ApplicationContext
         {
             _tray.ShowBalloonTip(
                 timeout:  6000,
-                tipTitle: "rotate+ — hotkey conflict",
+                tipTitle: "TrueRotate — hotkey conflict",
                 tipText:  $"Could not register: {string.Join(", ", failed)}.\nAnother app may be using these keys.",
                 tipIcon:  ToolTipIcon.Warning);
         }
@@ -235,7 +235,7 @@ internal sealed class TrayContext : ApplicationContext
         {
             _tray.ShowBalloonTip(
                 timeout:  4000,
-                tipTitle: "rotate+ — hotkey rotation failed",
+                tipTitle: "TrueRotate — hotkey rotation failed",
                 tipText:  ex.Message,
                 tipIcon:  ToolTipIcon.Error);
         }

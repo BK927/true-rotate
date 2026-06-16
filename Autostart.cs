@@ -1,6 +1,6 @@
 using Microsoft.Win32;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 /// <summary>
 /// Manages the "start with Windows" registry entry under
@@ -9,7 +9,7 @@ namespace RotatePlus;
 internal static class Autostart
 {
     private const string RunKey  = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string AppName = "rotate+";
+    private const string AppName = "TrueRotate";
 
     public static bool IsEnabled()
     {

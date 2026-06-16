@@ -1,4 +1,4 @@
-# rotate+ — 설계 문서 (v1)
+# TrueRotate — 설계 문서 (v1)
 
 > 현대화된 Windows 화면 회전 유틸리티. iRotate의 대체재이며, **NVIDIA 앱이
 > 디스플레이 설정을 건드린 뒤 회전 시 마우스 축이 어긋나는 버그**를 해결하는 것이
@@ -49,7 +49,7 @@ Windows에는 방향을 identity(0°)로 보고**하거나, 그 반대로 이중
 2. **drift 감지 & 재적용.** 디스플레이 변경 이벤트(`WM_DISPLAYCHANGE`)마다
    `QueryDisplayConfig`로 실제 방향을 다시 읽어 **저장된 의도 방향과 비교**. 다르면
    `SetDisplayConfig`로 즉시 재적용 → NVIDIA의 덮어쓰기를 되돌려 불변식 복원.
-3. **사용자 가이드.** rotate+가 방향의 유일한 권위가 되도록, NVIDIA 앱의 회전 기능은
+3. **사용자 가이드.** TrueRotate가 방향의 유일한 권위가 되도록, NVIDIA 앱의 회전 기능은
    사용하지 않게 안내한다 (앱이 시작 시 OS 방향을 재확정해 private 회전을 정리).
 
 > ⚠️ **검증 필요(가정):** 드라이버 버전에 따라 NVIDIA가 스캔아웃을 완전히 private하게
@@ -69,11 +69,11 @@ Windows에는 방향을 identity(0°)로 보고**하거나, 그 반대로 이중
 ## 4. 아키텍처 (모듈)
 
 ```
-rotate+ (트레이 앱, 보이는 창 없음)
+TrueRotate (트레이 앱, 보이는 창 없음)
 ├── AppHost          단일 인스턴스(Mutex), 트레이 수명주기, 메시지 펌프
 ├── DisplayService   CCD 래퍼: 토폴로지 질의, 방향 get/set (Query/SetDisplayConfig)
 ├── MonitorIdentity  안정적 모니터 식별 (monitorDevicePath 기반)
-├── OrientationStore 모니터별 의도 방향 영속화 (JSON, %AppData%\rotate+\config.json)
+├── OrientationStore 모니터별 의도 방향 영속화 (JSON, %AppData%\TrueRotate\config.json)
 ├── DisplayWatcher   숨은 메시지 창에서 WM_DISPLAYCHANGE / WM_DEVICECHANGE 수신
 ├── ReapplyController drift 비교 → 재적용 (디바운스 + 자기유발 이벤트 가드)
 ├── HotkeyManager    RegisterHotKey → 대상 모니터 회전
@@ -106,7 +106,7 @@ rotate+ (트레이 앱, 보이는 창 없음)
 - 대상 모니터 기본값: **커서 아래 모니터** (가장 직관적). 설정으로 primary/all 선택.
 
 ### 5.5 영속화 / 자동시작 / 단일 인스턴스
-- 설정: `%AppData%\rotate+\config.json` (방향 맵 + 핫키 + 동작 옵션).
+- 설정: `%AppData%\TrueRotate\config.json` (방향 맵 + 핫키 + 동작 옵션).
 - 자동시작: `HKCU\...\Run` 토글 (트레이 메뉴).
 - 단일 인스턴스: 명명된 Mutex.
 

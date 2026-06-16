@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 
-namespace RotatePlus;
+namespace TrueRotate;
 
 // ── Hotkey binding model ──────────────────────────────────────────────────────
 
@@ -100,13 +100,13 @@ internal sealed class HotkeyBindingsDto
 /// <summary>
 /// Persists the user's desired orientation per monitor (keyed by DevicePath),
 /// the auto-reapply toggle, autostart, hotkey target, and hotkey bindings.
-/// Backed by %AppData%\rotate+\config.json.
+/// Backed by %AppData%\TrueRotate\config.json.
 /// </summary>
 internal sealed class OrientationStore
 {
     private static readonly string ConfigPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "rotate+",
+        "TrueRotate",
         "config.json");
 
     private static readonly JsonSerializerOptions JsonOpts = new()
