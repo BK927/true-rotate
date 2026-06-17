@@ -9,6 +9,11 @@
 
 **[⬇ Download the latest release](https://github.com/BK927/true-rotate/releases)** — a modern, open-source replacement for the old **iRotate**.
 
+<p align="center">
+  <img src="docs/screenshot-settings.png" width="440"
+       alt="TrueRotate settings — rotation hotkeys, rotate target, and per-monitor hotkeys (Fluent / WinUI 3)">
+</p>
+
 TrueRotate lives in your system tray and rotates any monitor (0° / 90° / 180° / 270°) from a
 global hotkey or the tray menu. It's a modern replacement for the old *iRotate* utility, built
 to solve the one problem iRotate never could:
