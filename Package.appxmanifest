@@ -16,6 +16,12 @@
   </Dependencies>
   <Resources>
     <Resource Language="en-us" />
+    <Resource Language="ko-kr" />
+    <Resource Language="ja-jp" />
+    <Resource Language="zh-hans" />
+    <Resource Language="de-de" />
+    <Resource Language="fr-fr" />
+    <Resource Language="es-es" />
   </Resources>
   <Applications>
     <Application Id="TrueRotate" Executable="TrueRotate.exe" EntryPoint="Windows.FullTrustApplication">
