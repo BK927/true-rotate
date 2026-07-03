@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>显示器旋转快捷键 ＆ 修复竖屏后鼠标方向错乱的 NVIDIA 问题 | TrueRotate</title>
+<meta name="description" content="用快捷键将显示器旋转 0/90/180/270°。修复在 NVIDIA 上把显示器转成竖屏后，鼠标仍按横屏移动、方向相反的问题。适用于 Windows 10・11 的托盘应用。">
+<meta name="author" content="BK927">
+<link rel="canonical" href="https://bk927.github.io/true-rotate/zh/">
+<link rel="alternate" hreflang="en" href="https://bk927.github.io/true-rotate/">
+<link rel="alternate" hreflang="ko" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="ja" href="https://bk927.github.io/true-rotate/ja/">
+<link rel="alternate" hreflang="zh-Hans" href="https://bk927.github.io/true-rotate/zh/">
+<link rel="alternate" hreflang="x-default" href="https://bk927.github.io/true-rotate/">
+<link rel="icon" href="../img/favicon.png" type="image/png" sizes="48x48">
+<meta name="theme-color" content="#0d1117">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TrueRotate">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="显示器旋转快捷键 ＆ 修复竖屏后鼠标方向错乱的 NVIDIA 问题 | TrueRotate">
+<meta property="og:description" content="用全局快捷键旋转任意显示器，并修复竖屏后鼠标仍按横屏移动的 NVIDIA 问题的轻量 Windows 托盘应用。">
+<meta property="og:url" content="https://bk927.github.io/true-rotate/zh/">
+<meta property="og:image" content="https://bk927.github.io/true-rotate/zh/img/banner.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="显示器旋转快捷键 ＆ 修复竖屏后鼠标方向错乱的 NVIDIA 问题 | TrueRotate">
+<meta name="twitter:description" content="用全局快捷键旋转任意显示器，并修复竖屏后鼠标仍按横屏移动的 NVIDIA 问题。Windows 10/11。">
+<meta name="twitter:image" content="https://bk927.github.io/true-rotate/zh/img/banner.webp">
+
+<!-- Structured data: helps search engines show a rich app result -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TrueRotate",
+  "operatingSystem": "Windows 10, Windows 11",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "一款轻量的 Windows 托盘工具，可通过全局快捷键或托盘菜单将任意显示器旋转到 0/90/180/270°，并修复在 NVIDIA 上把显示器转成竖屏后鼠标仍按横屏移动、出现无法到达的死区的问题。",
+  "url": "https://bk927.github.io/true-rotate/zh/",
+  "downloadUrl": "https://apps.microsoft.com/detail/9NN8R4FRDG71",
+  "image": "https://bk927.github.io/true-rotate/zh/img/banner.webp",
+  "screenshot": "https://bk927.github.io/true-rotate/zh/img/hotkeys.webp",
+  "softwareVersion": "1.0",
+  "author": { "@type": "Person", "name": "BK927" },
+  "offers": { "@type": "Offer", "price": "0.99", "priceCurrency": "USD" }
+}
+</script>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "除 NVIDIA 外的 GPU（AMD、Intel）也能用吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以。旋转使用 Windows 标准显示接口，因此适用于任何 GPU。鼠标轴向错乱主要出现在 NVIDIA 上，但无论使用哪种 GPU，TrueRotate 都会在每次旋转时重新校正光标。" }
+    },
+    {
+      "@type": "Question",
+      "name": "旋转后鼠标方向相反的问题也能修复吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以，这正是 TrueRotate 的核心。每次旋转都会重新映射光标坐标，因此竖屏显示器上鼠标像横屏一样移动、或出现无法到达的死区的问题都会消失。" }
+    },
+    {
+      "@type": "Question",
+      "name": "可以更改快捷键或为每个显示器单独设置吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以。所有旋转快捷键都能在设置中自由更改，还能为每个显示器分配专用按键。" }
+    },
+    {
+      "@type": "Question",
+      "name": "有广告或数据收集吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "没有。无广告，无跟踪。是否随 Windows 启动也可自行开关。" }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bg1:#0d1117; --bg2:#182242; --accent:#3887eb; --accent2:#4aa3ff;
+    --text:#e8ebf0; --muted:#a9adb6; --card:rgba(255,255,255,.04); --border:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text); line-height:1.6;
+    background:linear-gradient(160deg,#0d1117 0%,#0f1526 45%,#182242 100%);
+    background-attachment:fixed; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .langbar{display:flex;justify-content:flex-end;gap:14px;font-size:13px;padding-top:4px}
+  .langbar a{color:var(--muted)}
+  .langbar a:hover{color:var(--accent2);text-decoration:none}
+  .langbar .cur{color:var(--text);font-weight:600}
+
+  header{padding:20px 0 28px;text-align:center}
+  .icon{width:92px;height:92px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
+  h1{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.5px;margin:18px 0 6px;line-height:1.15}
+  h1 .brand{color:#fff}
+  .sub{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:620px;margin:0 auto 26px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+  .btn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:600;font-size:16px}
+  .btn-primary{background:linear-gradient(135deg,#3887eb,#2f6fd0);color:#fff;box-shadow:0 8px 22px rgba(56,135,235,.35)}
+  .btn-primary:hover{text-decoration:none;filter:brightness(1.08)}
+  .btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
+  .btn-ghost:hover{text-decoration:none;border-color:var(--accent)}
+  .note{font-size:13px;color:var(--muted);margin-top:6px}
+
+  .hero-img{display:block;width:100%;height:auto;max-width:900px;margin:40px auto 0;border-radius:14px;
+    border:1px solid var(--border);box-shadow:0 30px 70px rgba(0,0,0,.5)}
+
+  section{padding:52px 0;border-top:1px solid var(--border)}
+  h2{font-size:clamp(23px,3.4vw,30px);font-weight:700;letter-spacing:-.3px;margin-bottom:14px}
+  h2 .bar{display:inline-block;width:44px;height:5px;background:var(--accent);border-radius:3px;vertical-align:middle;margin-right:12px}
+  p.lead{color:var(--text);font-size:18px;max-width:760px}
+  p.lead + p.lead{margin-top:14px}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:26px}
+  .feat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .feat h3{font-size:17px;margin-bottom:6px}
+  .feat p{font-size:14.5px;color:var(--muted)}
+
+  .faq-item{margin-top:22px;max-width:820px}
+  .faq-item h3{font-size:17px;margin-bottom:5px}
+  .faq-item p{color:var(--muted);font-size:15px}
+
+  .shots{display:grid;grid-template-columns:1fr;gap:22px;margin-top:26px}
+  .shot img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+
+  table{width:100%;border-collapse:collapse;margin-top:22px;background:var(--card);border-radius:12px;overflow:hidden}
+  th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:15px}
+  th{background:rgba(255,255,255,.05);font-weight:600}
+  tr:last-child td{border-bottom:none}
+  kbd{font-family:Consolas,monospace;background:rgba(255,255,255,.08);border:1px solid var(--border);
+    border-radius:5px;padding:2px 7px;font-size:13px}
+
+  .final{text-align:center}
+  footer{border-top:1px solid var(--border);padding:34px 0 60px;text-align:center;color:var(--muted);font-size:14px}
+  footer a{margin:0 8px}
+
+  .btn{transition:filter .18s ease,transform .18s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .feat{transition:transform .18s ease,border-color .18s ease}
+  .feat:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .shot img{transition:transform .28s ease}
+  .shot img:hover{transform:scale(1.012)}
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+      main section,.hero-img{animation:fadeUp both;animation-timeline:view();animation-range:entry 4% cover 24%}
+    }
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="Language">
+      <a href="../">EN</a>
+      <a href="../ko/">한국어</a>
+      <a href="../ja/">日本語</a>
+      <span class="cur" aria-current="true">简体中文</span>
+    </nav>
+    <img class="icon" src="../img/icon.webp" width="92" height="92" decoding="async" alt="TrueRotate 应用图标 — 旋转环内两块重叠的显示器方块">
+    <h1>用快捷键旋转显示器 —<br>并修复 <span class="brand">NVIDIA 鼠标轴向错乱</span></h1>
+    <p class="sub">TrueRotate 是一款轻量的 Windows 托盘应用，可通过全局快捷键或托盘菜单旋转任意显示器，并修复旋转后鼠标沿错误轴向移动的 NVIDIA 问题。</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9NN8R4FRDG71">从 Microsoft Store 获取</a>
+    </div>
+    <p class="note">一键安装 · 自动更新 · Windows 10 &amp; 11 · iRotate 的现代替代</p>
+    <p class="note">开发者？ <a href="https://github.com/BK927/true-rotate">在 GitHub 上从源码构建 →</a></p>
+    <img class="hero-img" src="img/banner.webp" width="2560" height="1280" decoding="async" fetchpriority="high" alt="TrueRotate — 旋转屏幕后光标仍保持正确轴向，修复 NVIDIA 旋转问题">
+  </div>
+</header>
+
+<main>
+  <section id="problem">
+    <div class="wrap">
+      <h2><span class="bar"></span>NVIDIA 屏幕旋转问题</h2>
+      <p class="lead">在 NVIDIA 系统上把显示器转成<strong>竖屏</strong>后，<strong>鼠标却仍像横屏一样</strong>移动？ 你把光标往侧面推，它却上下移动 —— 指针方向相反，屏幕一部分还会变成光标无法到达的<strong>死区</strong>。</p>
+      <p class="lead muted">这通常在 NVIDIA 应用或控制面板更改显示设置后立刻出现，重启也无法解决。这是众所周知的 NVIDIA 驱动问题，并非你的操作有误。</p>
+    </div>
+  </section>
+
+  <section id="fix">
+    <div class="wrap">
+      <h2><span class="bar"></span>TrueRotate 如何解决</h2>
+      <p class="lead">TrueRotate 在<strong>每次旋转时</strong>都会通过 Windows CCD（连接与配置显示器）API 重新枚举显示模式，并重建光标坐标映射。错误轴向和死区根本不会出现。</p>
+      <p class="lead muted">通过全局快捷键或托盘菜单，将任意显示器旋转到 0°、90°、180° 或 270°。只要从 TrueRotate 旋转，即使在多显示器、多 GPU 环境下，鼠标在每个屏幕上都能正常移动。</p>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <h2><span class="bar"></span>功能</h2>
+      <div class="grid">
+        <div class="feat"><h3>全局旋转快捷键</h3><p>默认 Ctrl+Alt+Shift+方向键，可完全自定义。无需打开设置即可随处旋转 —— 当 Windows 或 NVIDIA 的旋转快捷键失效时的可靠替代。</p></div>
+        <div class="feat"><h3>修复 NVIDIA 轴向问题</h3><p>每次旋转都会重新映射光标，错误轴向和死区不再出现。</p></div>
+        <div class="feat"><h3>每显示器快捷键</h3><p>为每个显示器分配与光标位置无关的专用旋转键。</p></div>
+        <div class="feat"><h3>一键循环</h3><p>一个快捷键依次切换 0 → 90 → 180 → 270。</p></div>
+        <div class="feat"><h3>自动重新应用</h3><p>当 NVIDIA 面板等其他应用更改方向时，恢复到你保存的方向。</p></div>
+        <div class="feat"><h3>干净安静</h3><p>随 Windows 启动，Fluent（WinUI 3）设置，7 种语言。无广告、无跟踪。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenshots">
+    <div class="wrap">
+      <h2><span class="bar"></span>预览</h2>
+      <div class="shots">
+        <div class="shot"><img src="img/hotkeys.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="TrueRotate 全局旋转快捷键设置 —— 可自定义的 Ctrl+Alt+Shift+方向键用于旋转屏幕"></div>
+        <div class="shot"><img src="img/nvidia-fix.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="修复 NVIDIA 鼠标轴向问题的自动重新应用设置"></div>
+        <div class="shot"><img src="img/per-monitor.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="面向多显示器的每显示器旋转快捷键"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hotkeys">
+    <div class="wrap">
+      <h2><span class="bar"></span>默认快捷键</h2>
+      <table>
+        <thead><tr><th>快捷键</th><th>旋转</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd></td><td>0° — 横向</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd></td><td>90° — 竖向</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↓</kbd></td><td>180° — 横向（上下翻转）</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd></td><td>270° — 竖向（反向）</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:14px">默认情况下，快捷键旋转光标所在的显示器。所有快捷键均可在设置中更改。</p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2><span class="bar"></span>常见问题</h2>
+      <div class="faq-item">
+        <h3>除 NVIDIA 外的 GPU（AMD、Intel）也能用吗？</h3>
+        <p>可以。旋转使用 Windows 标准显示接口，因此适用于任何 GPU。鼠标轴向错乱主要出现在 NVIDIA 上，但无论使用哪种 GPU，TrueRotate 都会在每次旋转时重新校正光标。</p>
+      </div>
+      <div class="faq-item">
+        <h3>旋转后鼠标方向相反的问题也能修复吗？</h3>
+        <p>可以，这正是 TrueRotate 的核心。每次旋转都会重新映射光标坐标，因此竖屏显示器上鼠标像横屏一样移动、或出现无法到达的死区的问题都会消失。</p>
+      </div>
+      <div class="faq-item">
+        <h3>可以更改快捷键或为每个显示器单独设置吗？</h3>
+        <p>可以。所有旋转快捷键都能在设置中自由更改，还能为每个显示器分配专用按键。</p>
+      </div>
+      <div class="faq-item">
+        <h3>有广告或数据收集吗？</h3>
+        <p>没有。无广告，无跟踪。是否随 Windows 启动也可自行开关。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="get" class="final">
+    <div class="wrap">
+      <h2 style="text-align:center"><span class="bar"></span>获取 TrueRotate</h2>
+      <p class="lead" style="margin:0 auto 24px">安装一次，即可通过商店自动更新。</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9NN8R4FRDG71">从 Microsoft Store 获取</a>
+      </div>
+      <p class="note" style="margin-top:16px">开发者或希望自行构建？ <a href="https://github.com/BK927/true-rotate">在 GitHub 获取源码 →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store</a> ·
+      <a href="https://github.com/BK927/true-rotate">GitHub</a> ·
+      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">隐私政策</a>
+    </p>
+    <p style="margin-top:10px">TrueRotate — Windows 显示器旋转工具 ＆ NVIDIA 旋转问题修复 · MIT 许可 · © 2026 BK927</p>
+  </div>
+</footer>
+</body>
+</html>

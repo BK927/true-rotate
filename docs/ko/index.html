@@ -9,6 +9,8 @@
 <link rel="canonical" href="https://bk927.github.io/true-rotate/ko/">
 <link rel="alternate" hreflang="en" href="https://bk927.github.io/true-rotate/">
 <link rel="alternate" hreflang="ko" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="ja" href="https://bk927.github.io/true-rotate/ja/">
+<link rel="alternate" hreflang="zh-Hans" href="https://bk927.github.io/true-rotate/zh/">
 <link rel="alternate" hreflang="x-default" href="https://bk927.github.io/true-rotate/">
 <link rel="icon" href="../img/favicon.png" type="image/png" sizes="48x48">
 <meta name="theme-color" content="#0d1117">
@@ -92,7 +94,12 @@
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
 
-  header{padding:64px 0 28px;text-align:center}
+  .langbar{display:flex;justify-content:flex-end;gap:14px;font-size:13px;padding-top:4px}
+  .langbar a{color:var(--muted)}
+  .langbar a:hover{color:var(--accent2);text-decoration:none}
+  .langbar .cur{color:var(--text);font-weight:600}
+
+  header{padding:20px 0 28px;text-align:center}
   .icon{width:92px;height:92px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
   h1{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.5px;margin:18px 0 6px;line-height:1.15}
   h1 .brand{color:#fff}
@@ -158,6 +165,12 @@
 <body>
 <header>
   <div class="wrap">
+    <nav class="langbar" aria-label="Language">
+      <a href="../">EN</a>
+      <span class="cur" aria-current="true">한국어</span>
+      <a href="../ja/">日本語</a>
+      <a href="../zh/">简体中文</a>
+    </nav>
     <img class="icon" src="../img/icon.webp" width="92" height="92" decoding="async" alt="TrueRotate 앱 아이콘 — 회전 링 안에 겹쳐진 두 개의 모니터 타일">
     <h1>단축키 하나로 모니터 회전 —<br>그리고 <span class="brand">NVIDIA 마우스 축 버그</span> 해결</h1>
     <p class="sub">TrueRotate는 전역 단축키나 트레이 메뉴로 어떤 모니터든 회전하는 가벼운 Windows 트레이 앱입니다. 회전 후 마우스가 엉뚱한 축으로 움직이는 NVIDIA 버그까지 잡아줍니다.</p>
@@ -267,8 +280,7 @@
     <p>
       <a href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store</a> ·
       <a href="https://github.com/BK927/true-rotate">GitHub</a> ·
-      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">개인정보 처리방침</a> ·
-      <a href="../">English</a>
+      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">개인정보 처리방침</a>
     </p>
     <p style="margin-top:10px">TrueRotate — Windows 화면 회전 유틸리티 &amp; NVIDIA 회전 버그 해결 · MIT 라이선스 · © 2026 BK927</p>
   </div>

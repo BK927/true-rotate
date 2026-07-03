@@ -9,6 +9,8 @@
 <link rel="canonical" href="https://bk927.github.io/true-rotate/">
 <link rel="alternate" hreflang="en" href="https://bk927.github.io/true-rotate/">
 <link rel="alternate" hreflang="ko" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="ja" href="https://bk927.github.io/true-rotate/ja/">
+<link rel="alternate" hreflang="zh-Hans" href="https://bk927.github.io/true-rotate/zh/">
 <link rel="alternate" hreflang="x-default" href="https://bk927.github.io/true-rotate/">
 <link rel="icon" href="img/favicon.png" type="image/png" sizes="48x48">
 <meta name="theme-color" content="#0d1117">
@@ -91,7 +93,12 @@
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
 
-  header{padding:64px 0 28px;text-align:center}
+  .langbar{display:flex;justify-content:flex-end;gap:14px;font-size:13px;padding-top:4px}
+  .langbar a{color:var(--muted)}
+  .langbar a:hover{color:var(--accent2);text-decoration:none}
+  .langbar .cur{color:var(--text);font-weight:600}
+
+  header{padding:20px 0 28px;text-align:center}
   .icon{width:92px;height:92px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
   h1{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.5px;margin:18px 0 6px;line-height:1.15}
   h1 .brand{color:#fff}
@@ -157,6 +164,12 @@
 <body>
 <header>
   <div class="wrap">
+    <nav class="langbar" aria-label="Language">
+      <span class="cur" aria-current="true">EN</span>
+      <a href="ko/">한국어</a>
+      <a href="ja/">日本語</a>
+      <a href="zh/">简体中文</a>
+    </nav>
     <img class="icon" src="img/icon.webp" width="92" height="92" decoding="async" alt="TrueRotate app icon — two overlapping monitor tiles inside a rotation ring">
     <h1>Rotate your monitor with a hotkey — and fix the<br><span class="brand">NVIDIA mouse-axis bug</span></h1>
     <p class="sub">TrueRotate is a lightweight Windows tray app that rotates any monitor from a global hotkey or the tray menu — and cures the NVIDIA rotation bug that puts your mouse on the wrong axis.</p>
@@ -266,8 +279,7 @@
     <p>
       <a href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store</a> ·
       <a href="https://github.com/BK927/true-rotate">GitHub</a> ·
-      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">Privacy</a> ·
-      <a href="ko/">한국어</a>
+      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">Privacy</a>
     </p>
     <p style="margin-top:10px">TrueRotate — Windows display rotation utility &amp; NVIDIA rotation-bug fix · MIT licensed · © 2026 BK927</p>
   </div>
