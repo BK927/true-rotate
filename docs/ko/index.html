@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모니터 회전 단축키 &amp; 세로 모니터 마우스 방향 버그 수정 (NVIDIA) | TrueRotate</title>
+<meta name="description" content="단축키 하나로 모니터를 0/90/180/270°로 회전하세요. NVIDIA에서 세로 모니터로 돌린 뒤 마우스가 가로처럼 움직이고 방향이 반대로 되는 버그를 고칩니다. Windows 10·11 트레이 앱.">
+<meta name="author" content="BK927">
+<link rel="canonical" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="en" href="https://bk927.github.io/true-rotate/">
+<link rel="alternate" hreflang="ko" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="x-default" href="https://bk927.github.io/true-rotate/">
+<link rel="icon" href="../img/favicon.png" type="image/png" sizes="48x48">
+<meta name="theme-color" content="#0d1117">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TrueRotate">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="모니터 회전 단축키 & 세로 모니터 마우스 버그 수정 (NVIDIA) | TrueRotate">
+<meta property="og:description" content="전역 단축키로 어떤 모니터든 회전하고, 세로 모니터에서 마우스가 가로로 움직이는 NVIDIA 버그를 잡는 가벼운 Windows 트레이 앱.">
+<meta property="og:url" content="https://bk927.github.io/true-rotate/ko/">
+<meta property="og:image" content="https://bk927.github.io/true-rotate/ko/img/banner.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="모니터 회전 단축키 & 세로 모니터 마우스 버그 수정 (NVIDIA) | TrueRotate">
+<meta name="twitter:description" content="전역 단축키로 어떤 모니터든 회전하고, 세로 모니터에서 마우스가 가로로 움직이는 NVIDIA 버그를 해결. Windows 10/11.">
+<meta name="twitter:image" content="https://bk927.github.io/true-rotate/ko/img/banner.webp">
+
+<!-- Structured data: helps search engines show a rich app result -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TrueRotate",
+  "operatingSystem": "Windows 10, Windows 11",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "전역 단축키나 트레이 메뉴로 어떤 모니터든 0/90/180/270°로 회전하고, 세로 모니터로 돌린 뒤 마우스가 가로처럼 엉뚱한 축으로 움직이며 데드존이 생기는 NVIDIA 버그를 해결하는 가벼운 Windows 트레이 유틸리티.",
+  "url": "https://bk927.github.io/true-rotate/ko/",
+  "downloadUrl": "https://apps.microsoft.com/detail/9NN8R4FRDG71",
+  "image": "https://bk927.github.io/true-rotate/ko/img/banner.webp",
+  "screenshot": "https://bk927.github.io/true-rotate/ko/img/hotkeys.webp",
+  "softwareVersion": "1.0",
+  "author": { "@type": "Person", "name": "BK927" },
+  "offers": { "@type": "Offer", "price": "0.99", "priceCurrency": "USD" }
+}
+</script>
+
+<!-- FAQ structured data: targets the real long-tail questions users search -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "엔비디아가 아닌 GPU(AMD·인텔)에서도 되나요?",
+      "acceptedAnswer": { "@type": "Answer", "text": "네. 화면 회전은 Windows 표준 방식으로 동작해 모든 GPU에서 작동합니다. 마우스 축이 어긋나는 증상은 주로 NVIDIA에서 나타나지만, TrueRotate는 어떤 GPU에서든 회전할 때마다 커서를 다시 맞춰줍니다." }
+    },
+    {
+      "@type": "Question",
+      "name": "회전한 뒤 마우스가 반대 방향으로 움직이는 것도 고쳐지나요?",
+      "acceptedAnswer": { "@type": "Answer", "text": "네, 그게 TrueRotate의 핵심입니다. 회전할 때마다 커서 좌표를 다시 매핑해서, 세로 모니터에서 마우스가 가로처럼 움직이거나 커서가 닿지 않는 데드존이 생기는 문제가 사라집니다." }
+    },
+    {
+      "@type": "Question",
+      "name": "단축키를 바꾸거나 모니터마다 따로 지정할 수 있나요?",
+      "acceptedAnswer": { "@type": "Answer", "text": "네. 모든 회전 단축키는 설정에서 자유롭게 바꿀 수 있고, 각 모니터에 전용 단축키를 지정할 수도 있습니다." }
+    },
+    {
+      "@type": "Question",
+      "name": "광고나 데이터 수집이 있나요?",
+      "acceptedAnswer": { "@type": "Answer", "text": "없습니다. 광고도, 추적도 없습니다. Windows 시작 시 자동 실행 여부도 직접 켜고 끌 수 있습니다." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bg1:#0d1117; --bg2:#182242; --accent:#3887eb; --accent2:#4aa3ff;
+    --text:#e8ebf0; --muted:#a9adb6; --card:rgba(255,255,255,.04); --border:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text); line-height:1.6;
+    background:linear-gradient(160deg,#0d1117 0%,#0f1526 45%,#182242 100%);
+    background-attachment:fixed; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  header{padding:64px 0 28px;text-align:center}
+  .icon{width:92px;height:92px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
+  h1{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.5px;margin:18px 0 6px;line-height:1.15}
+  h1 .brand{color:#fff}
+  .sub{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:620px;margin:0 auto 26px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+  .btn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:600;font-size:16px}
+  .btn-primary{background:linear-gradient(135deg,#3887eb,#2f6fd0);color:#fff;box-shadow:0 8px 22px rgba(56,135,235,.35)}
+  .btn-primary:hover{text-decoration:none;filter:brightness(1.08)}
+  .btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
+  .btn-ghost:hover{text-decoration:none;border-color:var(--accent)}
+  .note{font-size:13px;color:var(--muted);margin-top:6px}
+
+  .hero-img{display:block;width:100%;height:auto;max-width:900px;margin:40px auto 0;border-radius:14px;
+    border:1px solid var(--border);box-shadow:0 30px 70px rgba(0,0,0,.5)}
+
+  section{padding:52px 0;border-top:1px solid var(--border)}
+  h2{font-size:clamp(23px,3.4vw,30px);font-weight:700;letter-spacing:-.3px;margin-bottom:14px}
+  h2 .bar{display:inline-block;width:44px;height:5px;background:var(--accent);border-radius:3px;vertical-align:middle;margin-right:12px}
+  p.lead{color:var(--text);font-size:18px;max-width:760px}
+  p.lead + p.lead{margin-top:14px}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:26px}
+  .feat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .feat h3{font-size:17px;margin-bottom:6px}
+  .feat p{font-size:14.5px;color:var(--muted)}
+
+  .faq-item{margin-top:22px;max-width:820px}
+  .faq-item h3{font-size:17px;margin-bottom:5px}
+  .faq-item p{color:var(--muted);font-size:15px}
+
+  .shots{display:grid;grid-template-columns:1fr;gap:22px;margin-top:26px}
+  .shot img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+
+  table{width:100%;border-collapse:collapse;margin-top:22px;background:var(--card);border-radius:12px;overflow:hidden}
+  th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:15px}
+  th{background:rgba(255,255,255,.05);font-weight:600}
+  tr:last-child td{border-bottom:none}
+  kbd{font-family:Consolas,monospace;background:rgba(255,255,255,.08);border:1px solid var(--border);
+    border-radius:5px;padding:2px 7px;font-size:13px}
+
+  .final{text-align:center}
+  footer{border-top:1px solid var(--border);padding:34px 0 60px;text-align:center;color:var(--muted);font-size:14px}
+  footer a{margin:0 8px}
+
+  /* Subtle, JS-free motion. Hover transitions work everywhere; scroll fade-in only
+     where supported (else content simply shows, no perf cost) and respects reduced-motion. */
+  .btn{transition:filter .18s ease,transform .18s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .feat{transition:transform .18s ease,border-color .18s ease}
+  .feat:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .shot img{transition:transform .28s ease}
+  .shot img:hover{transform:scale(1.012)}
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+      main section,.hero-img{animation:fadeUp both;animation-timeline:view();animation-range:entry 4% cover 24%}
+    }
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <img class="icon" src="../img/icon.webp" width="92" height="92" decoding="async" alt="TrueRotate 앱 아이콘 — 회전 링 안에 겹쳐진 두 개의 모니터 타일">
+    <h1>단축키 하나로 모니터 회전 —<br>그리고 <span class="brand">NVIDIA 마우스 축 버그</span> 해결</h1>
+    <p class="sub">TrueRotate는 전역 단축키나 트레이 메뉴로 어떤 모니터든 회전하는 가벼운 Windows 트레이 앱입니다. 회전 후 마우스가 엉뚱한 축으로 움직이는 NVIDIA 버그까지 잡아줍니다.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store에서 받기</a>
+    </div>
+    <p class="note">원클릭 설치 · 자동 업데이트 · Windows 10 &amp; 11 · iRotate의 현대적 대안</p>
+    <p class="note">개발자세요? <a href="https://github.com/BK927/true-rotate">GitHub에서 소스로 직접 빌드 →</a></p>
+    <img class="hero-img" src="img/banner.webp" width="2560" height="1280" decoding="async" fetchpriority="high" alt="TrueRotate — 화면을 회전해도 커서가 올바른 축을 유지하고, NVIDIA 회전 버그를 해결">
+  </div>
+</header>
+
+<main>
+  <section id="problem">
+    <div class="wrap">
+      <h2><span class="bar"></span>NVIDIA 화면 회전 버그</h2>
+      <p class="lead">NVIDIA 시스템에서 모니터를 <strong>세로로</strong> 돌렸더니 <strong>마우스가 여전히 가로인 것처럼</strong> 움직이나요? 커서를 옆으로 밀면 위아래로 가고 — 포인터가 <strong>반대 방향</strong>으로 움직이며, 화면 일부는 커서가 닿지 않는 <strong>데드존</strong>이 됩니다.</p>
+      <p class="lead muted">보통 NVIDIA 앱이나 제어판이 디스플레이 설정을 바꾼 직후 시작되고, 재부팅해도 고쳐지지 않습니다. 잘 알려진 NVIDIA 드라이버 버그이지, 당신이 뭘 잘못한 게 아닙니다.</p>
+    </div>
+  </section>
+
+  <section id="fix">
+    <div class="wrap">
+      <h2><span class="bar"></span>TrueRotate는 이렇게 해결합니다</h2>
+      <p class="lead">TrueRotate는 <strong>회전할 때마다</strong> Windows CCD(디스플레이 연결·구성) API로 디스플레이 모드를 강제로 다시 열어 커서의 좌표 매핑을 재구성합니다. 엉뚱한 축·데드존 현상이 아예 나타나지 않습니다.</p>
+      <p class="lead muted">전역 단축키나 트레이 메뉴로 어떤 모니터든 0°, 90°, 180°, 270°로 회전하세요. TrueRotate로만 돌리면 멀티모니터·멀티 GPU 환경에서도 마우스가 모든 화면에서 정상적으로 움직입니다.</p>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <h2><span class="bar"></span>기능</h2>
+      <div class="grid">
+        <div class="feat"><h3>전역 회전 단축키</h3><p>기본 Ctrl+Alt+Shift+화살표, 자유롭게 재설정. 설정을 열지 않고 어디서든 회전합니다 — Windows·NVIDIA의 화면 회전 단축키가 안 될 때의 대안입니다.</p></div>
+        <div class="feat"><h3>NVIDIA 축 버그 해결</h3><p>회전할 때마다 커서를 재매핑해 엉뚱한 축·데드존이 다시 생기지 않습니다.</p></div>
+        <div class="feat"><h3>모니터별 단축키</h3><p>각 디스플레이에 커서 위치와 무관한 전용 회전 키를 지정할 수 있습니다.</p></div>
+        <div class="feat"><h3>원키 순환</h3><p>단축키 하나로 0 → 90 → 180 → 270을 차례로 순환합니다.</p></div>
+        <div class="feat"><h3>자동 재적용</h3><p>NVIDIA 제어판 같은 다른 앱이 방향을 바꿔도 저장한 방향으로 되돌립니다.</p></div>
+        <div class="feat"><h3>깔끔하고 조용함</h3><p>Windows 시작 시 실행, Fluent(WinUI 3) 설정, 7개 언어. 광고·추적 없음.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenshots">
+    <div class="wrap">
+      <h2><span class="bar"></span>미리 보기</h2>
+      <div class="shots">
+        <div class="shot"><img src="img/hotkeys.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="TrueRotate 전역 회전 단축키 설정 — 재설정 가능한 Ctrl+Alt+Shift+화살표로 화면 회전"></div>
+        <div class="shot"><img src="img/nvidia-fix.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="NVIDIA 마우스 축 버그를 해결하는 자동 재적용 설정"></div>
+        <div class="shot"><img src="img/per-monitor.webp" width="2560" height="1280" loading="lazy" decoding="async" alt="멀티모니터 환경을 위한 모니터별 회전 단축키"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hotkeys">
+    <div class="wrap">
+      <h2><span class="bar"></span>기본 단축키</h2>
+      <table>
+        <thead><tr><th>단축키</th><th>회전</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd></td><td>0° — 가로</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd></td><td>90° — 세로</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↓</kbd></td><td>180° — 가로(상하 반전)</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd></td><td>270° — 세로(반대)</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:14px">기본적으로 단축키는 커서가 있는 모니터를 회전합니다. 모든 단축키는 설정에서 바꿀 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2><span class="bar"></span>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <h3>엔비디아가 아닌 GPU(AMD·인텔)에서도 되나요?</h3>
+        <p>네. 화면 회전은 Windows 표준 방식으로 동작해 모든 GPU에서 작동합니다. 마우스 축이 어긋나는 증상은 주로 NVIDIA에서 나타나지만, TrueRotate는 어떤 GPU에서든 회전할 때마다 커서를 다시 맞춰줍니다.</p>
+      </div>
+      <div class="faq-item">
+        <h3>회전한 뒤 마우스가 반대 방향으로 움직이는 것도 고쳐지나요?</h3>
+        <p>네, 그게 TrueRotate의 핵심입니다. 회전할 때마다 커서 좌표를 다시 매핑해서, 세로 모니터에서 마우스가 가로처럼 움직이거나 커서가 닿지 않는 데드존이 생기는 문제가 사라집니다.</p>
+      </div>
+      <div class="faq-item">
+        <h3>단축키를 바꾸거나 모니터마다 따로 지정할 수 있나요?</h3>
+        <p>네. 모든 회전 단축키는 설정에서 자유롭게 바꿀 수 있고, 각 모니터에 전용 단축키를 지정할 수도 있습니다.</p>
+      </div>
+      <div class="faq-item">
+        <h3>광고나 데이터 수집이 있나요?</h3>
+        <p>없습니다. 광고도, 추적도 없습니다. Windows 시작 시 자동 실행 여부도 직접 켜고 끌 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="get" class="final">
+    <div class="wrap">
+      <h2 style="text-align:center"><span class="bar"></span>TrueRotate 받기</h2>
+      <p class="lead" style="margin:0 auto 24px">한 번 설치하면 스토어를 통해 자동으로 업데이트됩니다.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store에서 받기</a>
+      </div>
+      <p class="note" style="margin-top:16px">개발자이거나 직접 빌드하고 싶으세요? <a href="https://github.com/BK927/true-rotate">GitHub에서 소스 받기 →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store</a> ·
+      <a href="https://github.com/BK927/true-rotate">GitHub</a> ·
+      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">개인정보 처리방침</a> ·
+      <a href="../">English</a>
+    </p>
+    <p style="margin-top:10px">TrueRotate — Windows 화면 회전 유틸리티 &amp; NVIDIA 회전 버그 해결 · MIT 라이선스 · © 2026 BK927</p>
+  </div>
+</footer>
+</body>
+</html>

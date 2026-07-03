@@ -7,6 +7,9 @@
 <meta name="description" content="Rotate any monitor with a global hotkey (0/90/180/270). Fixes the NVIDIA bug where your mouse is still in landscape and moves the wrong direction on a portrait monitor after rotating. Windows 10 &amp; 11.">
 <meta name="author" content="BK927">
 <link rel="canonical" href="https://bk927.github.io/true-rotate/">
+<link rel="alternate" hreflang="en" href="https://bk927.github.io/true-rotate/">
+<link rel="alternate" hreflang="ko" href="https://bk927.github.io/true-rotate/ko/">
+<link rel="alternate" hreflang="x-default" href="https://bk927.github.io/true-rotate/">
 <link rel="icon" href="img/favicon.png" type="image/png" sizes="48x48">
 <meta name="theme-color" content="#0d1117">
 
@@ -49,23 +52,23 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Why is my mouse still in landscape on a portrait monitor?",
-      "acceptedAnswer": { "@type": "Answer", "text": "After you rotate a monitor to portrait on an NVIDIA system, the cursor's coordinate mapping can stay in landscape, so the mouse moves sideways when you push it up. TrueRotate rebuilds that mapping on every rotation, so the cursor tracks correctly." }
+      "name": "Does it work on GPUs other than NVIDIA (AMD or Intel)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Rotation uses the standard Windows display API, so it works on any GPU. The wrong-axis mouse behavior mostly appears on NVIDIA, but TrueRotate remaps the cursor on every rotation no matter which GPU you have." }
     },
     {
       "@type": "Question",
-      "name": "Why does my mouse move the wrong direction after rotating my monitor?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It's a known NVIDIA rotation bug: the display rotates but the pointer axis doesn't, leaving unreachable dead zones. Rotating from TrueRotate re-enumerates the display mode and remaps the cursor, so the wrong-direction movement never appears." }
+      "name": "Does it fix the mouse moving the wrong direction after rotating?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, that's the whole point. Rotating from TrueRotate remaps the cursor coordinates, so a portrait monitor where the mouse is still in landscape (moving sideways) or has unreachable dead zones just behaves normally." }
     },
     {
       "@type": "Question",
-      "name": "How do I rotate my monitor with a hotkey on Windows 11?",
-      "acceptedAnswer": { "@type": "Answer", "text": "TrueRotate adds global rotation hotkeys (Ctrl+Alt+Shift+Arrow by default, fully rebindable) to rotate any monitor to 0, 90, 180 or 270 degrees from anywhere. It's a reliable alternative when the NVIDIA or Windows rotate-screen shortcut isn't working." }
+      "name": "Can I rebind the hotkeys or set per-monitor keys?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every rotation hotkey is rebindable in Settings, and you can assign dedicated keys to each monitor." }
     },
     {
       "@type": "Question",
-      "name": "Does it work with dual monitors?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. TrueRotate handles multi-monitor and multi-GPU setups with optional per-monitor hotkeys, and fixes the dual-monitor case where the mouse moves the wrong direction after one screen is rotated." }
+      "name": "Are there ads or any data collection?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. No ads, no tracking. You can also choose whether it starts with Windows." }
     }
   ]
 }
@@ -179,7 +182,7 @@
     <div class="wrap">
       <h2><span class="bar"></span>How TrueRotate fixes it</h2>
       <p class="lead">TrueRotate rebuilds the cursor's coordinate mapping <strong>every time it rotates</strong>, using the Windows Connecting and Configuring Displays (CCD) API with forced mode re-enumeration. The wrong-axis behavior and dead zones simply never appear.</p>
-      <p class="lead muted">Rotate any monitor to 0°, 90°, 180° or 270° from a global hotkey or the tray menu. As long as you rotate from TrueRotate, the mouse tracks normally on every display — even in multi-monitor and multi-GPU setups.</p>
+      <p class="lead muted">Rotate any monitor to 0°, 90°, 180° or 270° from a global hotkey or the tray menu. As long as you rotate from TrueRotate, the mouse tracks normally on every display — even in multi-monitor and multi-GPU setups, including the dual-monitor case where the mouse moves the wrong direction after one screen is rotated.</p>
     </div>
   </section>
 
@@ -187,7 +190,7 @@
     <div class="wrap">
       <h2><span class="bar"></span>Features</h2>
       <div class="grid">
-        <div class="feat"><h3>Global rotation hotkeys</h3><p>Ctrl+Alt+Shift+Arrow by default, fully rebindable. Rotate from anywhere without opening Settings.</p></div>
+        <div class="feat"><h3>Global rotation hotkeys</h3><p>Ctrl+Alt+Shift+Arrow by default, fully rebindable. Rotate from anywhere without opening Settings — a reliable alternative when the Windows or NVIDIA rotate-screen shortcut isn't working.</p></div>
         <div class="feat"><h3>Fixes the NVIDIA axis bug</h3><p>Remaps the cursor on every rotation, so the wrong-axis movement and dead zones never come back.</p></div>
         <div class="feat"><h3>Per-monitor hotkeys</h3><p>Give each display its own dedicated rotation keys, independent of cursor position.</p></div>
         <div class="feat"><h3>One-key cycle</h3><p>Step through 0 → 90 → 180 → 270 with a single shortcut.</p></div>
@@ -228,20 +231,20 @@
     <div class="wrap">
       <h2><span class="bar"></span>Frequently asked questions</h2>
       <div class="faq-item">
-        <h3>Why is my mouse still in landscape on a portrait monitor?</h3>
-        <p>After you rotate a monitor to portrait on an NVIDIA system, the cursor's coordinate mapping can stay in landscape — so the mouse moves sideways when you push it up. TrueRotate rebuilds that mapping on every rotation, so the cursor tracks correctly.</p>
+        <h3>Does it work on GPUs other than NVIDIA (AMD or Intel)?</h3>
+        <p>Yes. Rotation uses the standard Windows display API, so it works on any GPU. The wrong-axis mouse behavior mostly appears on NVIDIA, but TrueRotate remaps the cursor on every rotation no matter which GPU you have.</p>
       </div>
       <div class="faq-item">
-        <h3>Why does my mouse move the wrong direction after rotating my monitor?</h3>
-        <p>It's a known NVIDIA rotation bug: the display rotates but the pointer axis doesn't, leaving unreachable dead zones. Rotating from TrueRotate re-enumerates the display mode and remaps the cursor, so the wrong-direction movement never appears.</p>
+        <h3>Does it fix the mouse moving the wrong direction after rotating?</h3>
+        <p>Yes — that's the whole point. Rotating from TrueRotate remaps the cursor coordinates, so a portrait monitor where the mouse is still in landscape (moving sideways) or has unreachable dead zones just behaves normally.</p>
       </div>
       <div class="faq-item">
-        <h3>How do I rotate my monitor with a hotkey on Windows 11?</h3>
-        <p>TrueRotate adds global rotation hotkeys (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+Arrow by default, fully rebindable) to rotate any monitor to 0°, 90°, 180° or 270° from anywhere — a reliable alternative when the NVIDIA or Windows rotate-screen shortcut isn't working.</p>
+        <h3>Can I rebind the hotkeys or set per-monitor keys?</h3>
+        <p>Yes. Every rotation hotkey is rebindable in Settings, and you can assign dedicated keys to each monitor.</p>
       </div>
       <div class="faq-item">
-        <h3>Does it work with dual monitors?</h3>
-        <p>Yes. TrueRotate handles multi-monitor and multi-GPU setups with optional per-monitor hotkeys, and fixes the dual-monitor case where the mouse moves the wrong direction after one screen is rotated.</p>
+        <h3>Are there ads or any data collection?</h3>
+        <p>No. No ads, no tracking. You can also choose whether it starts with Windows.</p>
       </div>
     </div>
   </section>
@@ -263,7 +266,8 @@
     <p>
       <a href="https://apps.microsoft.com/detail/9NN8R4FRDG71">Microsoft Store</a> ·
       <a href="https://github.com/BK927/true-rotate">GitHub</a> ·
-      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">Privacy</a>
+      <a href="https://github.com/BK927/true-rotate/blob/main/PRIVACY.md">Privacy</a> ·
+      <a href="ko/">한국어</a>
     </p>
     <p style="margin-top:10px">TrueRotate — Windows display rotation utility &amp; NVIDIA rotation-bug fix · MIT licensed · © 2026 BK927</p>
   </div>
