@@ -58,11 +58,13 @@ public static class DisplayService
         fixed (DISPLAYCONFIG_PATH_INFO* pPaths = paths)
         fixed (DISPLAYCONFIG_MODE_INFO* pModes = modes)
         {
+            // Raw pointer overload: newer CsWin32 only accepts ref/Span arguments as a
+            // full set, and the topology id must be NULL for QDC_ONLY_ACTIVE_PATHS.
             err = PInvoke.QueryDisplayConfig(
                 QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS,
-                ref pathCount,
+                &pathCount,
                 pPaths,
-                ref modeCount,
+                &modeCount,
                 pModes,
                 null);
         }

@@ -32,14 +32,14 @@
 
   <ItemGroup>
     <!-- WinUI 3 / Windows App SDK -->
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260209005" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260921001" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2957" />
 
     <!-- Tray icon helper -->
-    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.1.0" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 
     <!-- CsWin32 P/Invoke source generator -->
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.367">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
