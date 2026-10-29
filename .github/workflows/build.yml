@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '**.md']
+  pull_request:
+    paths-ignore: ['docs/**', '**.md']
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build (Release)
+        run: dotnet build TrueRotate.csproj -c Release
+      - name: Check for vulnerable packages
+        shell: pwsh
+        run: |
+          $out = dotnet list TrueRotate.csproj package --vulnerable --include-transitive 2>&1 | Out-String
+          Write-Output $out
+          if ($out -match 'has the following vulnerable packages') { exit 1 }
