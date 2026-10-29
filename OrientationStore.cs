@@ -153,6 +153,8 @@ public sealed class OrientationStore
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "TrueRotate",
         "config.json");
+    private static readonly string BackupPath = ConfigPath + ".bak";
+    private static readonly string TempPath   = ConfigPath + ".tmp";
 
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
@@ -172,11 +174,19 @@ public sealed class OrientationStore
 
     public OrientationStore()
     {
+        // A torn/corrupt config would otherwise silently wipe the user's saved
+        // orientations and hotkeys; fall back to the previous good copy.
+        if (!TryLoad(ConfigPath) && TryLoad(BackupPath))
+            Log.Warn("Config unreadable; restored settings from config.json.bak");
+    }
+
+    private bool TryLoad(string path)
+    {
         try
         {
-            if (File.Exists(ConfigPath))
+            if (File.Exists(path))
             {
-                string json = File.ReadAllText(ConfigPath);
+                string json = File.ReadAllText(path);
                 var dto = JsonSerializer.Deserialize<ConfigDto>(json);
                 if (dto != null)
                 {
@@ -193,14 +203,16 @@ public sealed class OrientationStore
                     _hotkeys      = FromDto(dto.Hotkeys);
                     _cycleHotkey  = FromBindingDto(dto.CycleHotkey, new HotkeyBinding());
                     LoadMonitorHotkeys(dto.MonitorHotkeys);
+                    return true;
                 }
             }
         }
         catch (Exception ex)
         {
-            // Corrupt or missing file → start empty with defaults.
-            Log.Error("Config load failed; using defaults", ex);
+            // Corrupt file → caller tries the backup, else defaults.
+            Log.Error($"Config load failed ({Path.GetFileName(path)})", ex);
         }
+        return false;
     }
 
     // ── Properties ──────────────────────────────────────────────────────────
@@ -318,7 +330,20 @@ public sealed class OrientationStore
                 CycleHotkey    = ToBindingDto(_cycleHotkey),
                 MonitorHotkeys = ToMonitorDto(),
             }, JsonOpts);
-            File.WriteAllText(ConfigPath, json);
+
+            // Write-then-swap so a crash or power loss mid-write can never leave a
+            // half-written config.json; the previous version is kept as .bak.
+            using (var fs = new FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (var w = new StreamWriter(fs))
+            {
+                w.Write(json);
+                w.Flush();
+                fs.Flush(flushToDisk: true);
+            }
+            if (File.Exists(ConfigPath))
+                File.Replace(TempPath, ConfigPath, BackupPath, ignoreMetadataErrors: true);
+            else
+                File.Move(TempPath, ConfigPath);
         }
         catch (Exception ex)
         {
