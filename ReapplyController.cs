@@ -61,7 +61,11 @@ internal sealed class ReapplyController : IDisposable
 
         List<MonitorInfo> monitors;
         try { monitors = DisplayService.EnumerateMonitors(); }
-        catch { return; }  // Can't enumerate; skip this cycle.
+        catch (Exception ex)
+        {
+            Log.Error("Reapply: monitor enumeration failed; skipping this cycle", ex);
+            return;
+        }
 
         bool anyMismatch = false;
 
@@ -71,6 +75,7 @@ internal sealed class ReapplyController : IDisposable
             if (mon.Rotation == want) continue;
 
             anyMismatch = true;
+            Log.Info($"Reapply: '{mon.FriendlyName}' is {mon.Rotation}°, want {want}°{(_thrashPaused ? " (paused)" : "")}");
 
             // While thrash-paused, keep detecting (so the settled-state reset
             // below can self-heal once the display stops reverting) but stop
@@ -91,6 +96,7 @@ internal sealed class ReapplyController : IDisposable
             if (_correctiveCount > ThrashLimit)
             {
                 _thrashPaused = true;
+                Log.Warn($"Reapply: >{ThrashLimit} corrections within {ThrashWindowMs} ms; auto-reapply paused");
                 _showWarning(
                     L.Get("BalloonFightingTitle"),
                     L.Get("BalloonFightingText"));
@@ -109,6 +115,7 @@ internal sealed class ReapplyController : IDisposable
 
         if (!anyMismatch)
         {
+            if (_thrashPaused) Log.Info("Reapply: display settled; auto-reapply resumed");
             // Everything is correct: reset thrash state and un-pause.
             _correctiveCount     = 0;
             _firstCorrectiveTime = DateTime.MinValue;

@@ -226,4 +226,24 @@
     <value>TrueRotate — 재적용 실패</value>
   </data>
 
+  <!-- ── Support section (SettingsWindow) ── -->
+  <data name="SecSupport.Text" xml:space="preserve">
+    <value>지원</value>
+  </data>
+  <data name="CardReport.Header" xml:space="preserve">
+    <value>문제 신고</value>
+  </data>
+  <data name="CardReport.Description" xml:space="preserve">
+    <value>진단 정보(버전, 모니터, 최근 로그)를 복사한 뒤 신고 내용에 붙여 넣으세요. 자동으로 전송되는 정보는 없습니다.</value>
+  </data>
+  <data name="BtnCopyDiag.Content" xml:space="preserve">
+    <value>진단 정보 복사</value>
+  </data>
+  <data name="BtnReportIssue.Content" xml:space="preserve">
+    <value>문제 신고하기</value>
+  </data>
+  <data name="DiagCopied" xml:space="preserve">
+    <value>진단 정보를 클립보드에 복사했습니다. 신고 내용에 붙여 넣으세요.</value>
+  </data>
+
 </root>

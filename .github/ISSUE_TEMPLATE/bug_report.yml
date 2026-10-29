@@ -1,0 +1,38 @@
+name: Bug report
+description: Something isn't rotating, re-applying, or behaving as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Diagnostics make most problems solvable on the first try:
+        open **TrueRotate Settings → Support → Copy diagnostics** and paste the result below.
+        Older versions without that button: run `TrueRotate diag` in a terminal instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: |
+        1. Pressed Ctrl+Alt+Shift+Right on my second monitor
+        2. Expected portrait; the screen rotated but the mouse moved on the wrong axis
+    validations:
+      required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often?
+      options:
+        - Every time
+        - Sometimes
+        - Happened once
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Paste the output of "Copy diagnostics". Review it first — it lists monitor names and settings, nothing else personal.
+      render: text
+    validations:
+      required: true

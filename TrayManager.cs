@@ -110,6 +110,7 @@ internal sealed class TrayManager : IDisposable
         }
         catch (Exception ex)
         {
+            Log.Error("Tray menu: monitor enumeration failed", ex);
             AppendMenuItem(menu, 9999, L.Fmt("MenuError", ex.Message), enabled: false);
             AppendMenuSeparator(menu);
             AppendMenuItem(menu, MenuId.Exit, L.Get("MenuExit"));
@@ -278,6 +279,7 @@ internal sealed class TrayManager : IDisposable
             }
         }
 
+        Log.Info($"Hotkeys registered ({_perMonitorHotkeys.Count} per-monitor); failed: {(failed.Count > 0 ? string.Join(", ", failed) : "none")}");
         if (failed.Count > 0)
             ShowBalloon(
                 L.Get("BalloonHotkeyConflictTitle"),
@@ -323,10 +325,11 @@ internal sealed class TrayManager : IDisposable
                 var target = DisplayService.EnumerateMonitors()
                     .FirstOrDefault(m => string.Equals(m.DevicePath, pm.devicePath, StringComparison.OrdinalIgnoreCase));
                 if (target is not null) ApplyAndPersist(target, pm.degrees);
-                // monitor not currently connected → ignore
+                else Log.Info($"Per-monitor hotkey {id}: monitor not connected; ignored");
             }
             catch (Exception ex)
             {
+                Log.Error($"Per-monitor hotkey {id} failed", ex);
                 ShowBalloon(L.Get("BalloonHotkeyRotateFailedTitle"), ex.Message);
             }
             return;
@@ -353,6 +356,7 @@ internal sealed class TrayManager : IDisposable
         }
         catch (Exception ex)
         {
+            Log.Error($"Hotkey {id} failed", ex);
             ShowBalloon(L.Get("BalloonHotkeyRotateFailedTitle"), ex.Message);
         }
     }

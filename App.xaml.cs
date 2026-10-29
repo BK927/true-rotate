@@ -19,10 +19,18 @@ public partial class App : Application
         // default (OnLastWindowClose) shuts the dispatcher down — and the whole app —
         // the moment the Settings window is closed. Only our tray "Exit" should quit.
         this.DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;
+
+        // Log-only: crashes still surface to Windows Error Reporting as before.
+        this.UnhandledException += (_, e) => Log.Error("Unhandled UI exception", e.Exception);
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            Log.Error("Unhandled exception", e.ExceptionObject as Exception);
+        TaskScheduler.UnobservedTaskException += (_, e) => Log.Error("Unobserved task exception", e.Exception);
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        Log.Info($"Started TrueRotate {Diagnostics.AppVersion()} on {Environment.OSVersion.VersionString}");
+
         var store   = new OrientationStore();
         L.SetLanguage(store.Language);
         var reapply = new ReapplyController(store, ShowNotification);
@@ -60,6 +68,7 @@ public partial class App : Application
         catch (Exception ex)
         {
             _settingsWindow = null;
+            Log.Error("Opening settings failed", ex);
             _tray?.ShowBalloon(L.Get("BalloonSettingsErrorTitle"), ex.Message);
         }
     }
@@ -75,6 +84,7 @@ public partial class App : Application
 
     private void OnExitApp()
     {
+        Log.Info("Exit requested from tray");
         _tray?.Dispose();
         _hotkeyWindow?.Dispose();
         Exit();

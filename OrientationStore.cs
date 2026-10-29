@@ -196,9 +196,10 @@ public sealed class OrientationStore
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
             // Corrupt or missing file → start empty with defaults.
+            Log.Error("Config load failed; using defaults", ex);
         }
     }
 
@@ -319,9 +320,10 @@ public sealed class OrientationStore
             }, JsonOpts);
             File.WriteAllText(ConfigPath, json);
         }
-        catch
+        catch (Exception ex)
         {
             // Best-effort; don't crash the tray over a config write failure.
+            Log.Error("Config save failed", ex);
         }
     }
 

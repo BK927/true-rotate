@@ -120,6 +120,13 @@ public sealed partial class SettingsWindow : Window
         CardReapply.Header       = L.Get("CardReapply.Header");
         CardReapply.Description  = L.Get("CardReapply.Description");
 
+        // Support
+        SecSupport.Text            = L.Get("SecSupport.Text");
+        CardReport.Header          = L.Get("CardReport.Header");
+        CardReport.Description     = L.Get("CardReport.Description");
+        BtnCopyDiag.Content        = L.Get("BtnCopyDiag.Content");
+        BtnReportIssue.Content     = L.Get("BtnReportIssue.Content");
+
         // Buttons — global slots (Btn0–3 get their content from RefreshSlots; Btn4/ClearBtn4 too)
         // Explicit set here ensures initial load is localized before RefreshSlots overwrites:
         Btn0.Content     = L.Get("Btn0.Content");
@@ -193,7 +200,11 @@ public sealed partial class SettingsWindow : Window
     {
         List<MonitorInfo> monitors;
         try { monitors = DisplayService.EnumerateMonitors(); }
-        catch { return; }
+        catch (Exception ex)
+        {
+            Log.Error("Settings: monitor enumeration failed; per-monitor section hidden", ex);
+            return;
+        }
 
         var badgeStyle = ((FrameworkElement)this.Content).Resources["ComboBadge"] as Style;
         var textStyle  = ((FrameworkElement)this.Content).Resources["ComboText"]  as Style;
@@ -489,6 +500,7 @@ public sealed partial class SettingsWindow : Window
         }
         catch (Exception ex)
         {
+            Log.Error("Settings: applying autostart failed", ex);
             ShowError(L.Fmt("ErrAutostart", ex.Message).Replace("\\n", "\n"));
             return;
         }
@@ -528,6 +540,36 @@ public sealed partial class SettingsWindow : Window
         AutoReapplyToggle.IsOn    = true;
         ErrorBar.IsOpen           = false;
         RefreshSlots();
+    }
+
+    // ── Support ────────────────────────────────────────────────────────────────
+
+    private const string IssueUrl = "https://github.com/BK927/true-rotate/issues/new?template=bug_report.yml";
+
+    private void OnCopyDiagnostics(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var data = new Windows.ApplicationModel.DataTransfer.DataPackage();
+            data.SetText(Diagnostics.BuildReport(_store));
+            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(data);
+            Windows.ApplicationModel.DataTransfer.Clipboard.Flush();   // keep it after the app exits
+            SupportBar.Severity = InfoBarSeverity.Success;
+            SupportBar.Message  = L.Get("DiagCopied");
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Copy diagnostics failed", ex);
+            SupportBar.Severity = InfoBarSeverity.Error;
+            SupportBar.Message  = ex.Message;
+        }
+        SupportBar.IsOpen = true;
+    }
+
+    private async void OnReportIssue(object sender, RoutedEventArgs e)
+    {
+        try { await Launcher.LaunchUriAsync(new Uri(IssueUrl)); }
+        catch (Exception ex) { Log.Error("Opening issue page failed", ex); }
     }
 
     private void ShowError(string message)

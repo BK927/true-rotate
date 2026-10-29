@@ -226,4 +226,24 @@
     <value>TrueRotate — error al reaplicar</value>
   </data>
 
+  <!-- ── Support section (SettingsWindow) ── -->
+  <data name="SecSupport.Text" xml:space="preserve">
+    <value>Soporte</value>
+  </data>
+  <data name="CardReport.Header" xml:space="preserve">
+    <value>Informar de un problema</value>
+  </data>
+  <data name="CardReport.Description" xml:space="preserve">
+    <value>Copia la información de diagnóstico (versiones, monitores, registro reciente) y pégala en tu informe. No se envía nada automáticamente.</value>
+  </data>
+  <data name="BtnCopyDiag.Content" xml:space="preserve">
+    <value>Copiar diagnóstico</value>
+  </data>
+  <data name="BtnReportIssue.Content" xml:space="preserve">
+    <value>Informar</value>
+  </data>
+  <data name="DiagCopied" xml:space="preserve">
+    <value>Diagnóstico copiado al portapapeles. Pégalo en tu informe.</value>
+  </data>
+
 </root>

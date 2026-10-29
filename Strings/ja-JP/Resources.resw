@@ -226,4 +226,24 @@
     <value>TrueRotate — 再適用に失敗しました</value>
   </data>
 
+  <!-- ── Support section (SettingsWindow) ── -->
+  <data name="SecSupport.Text" xml:space="preserve">
+    <value>サポート</value>
+  </data>
+  <data name="CardReport.Header" xml:space="preserve">
+    <value>問題を報告</value>
+  </data>
+  <data name="CardReport.Description" xml:space="preserve">
+    <value>診断情報(バージョン、モニター、最近のログ)をコピーして、報告に貼り付けてください。自動送信されるものはありません。</value>
+  </data>
+  <data name="BtnCopyDiag.Content" xml:space="preserve">
+    <value>診断情報をコピー</value>
+  </data>
+  <data name="BtnReportIssue.Content" xml:space="preserve">
+    <value>問題を報告する</value>
+  </data>
+  <data name="DiagCopied" xml:space="preserve">
+    <value>診断情報をクリップボードにコピーしました。報告に貼り付けてください。</value>
+  </data>
+
 </root>

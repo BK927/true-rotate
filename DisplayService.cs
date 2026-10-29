@@ -182,7 +182,19 @@ public static class DisplayService
 
     public static void SetRotation(MonitorInfo m, uint degrees)
     {
-        ApplyRotation(m, DegreesToCcd(degrees), swapSourceDimensions: false);
+        // Timed because SetDisplayConfig runs on the UI thread and can stall on some
+        // drivers; the duration in the log is the evidence for any reported hang.
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ApplyRotation(m, DegreesToCcd(degrees), swapSourceDimensions: false);
+            Log.Info($"SetRotation '{m.FriendlyName}' {m.Rotation}° -> {degrees}° ok ({sw.ElapsedMilliseconds} ms)");
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"SetRotation '{m.FriendlyName}' {m.Rotation}° -> {degrees}° failed ({sw.ElapsedMilliseconds} ms)", ex);
+            throw;
+        }
     }
 
     private static bool SameLuid(Windows.Win32.Foundation.LUID luid, MonitorInfo m)
@@ -250,6 +262,7 @@ public static class DisplayService
         // ERROR_BAD_CONFIGURATION = 1610; retry once with swapped source dimensions for 90/270
         if (!swapSourceDimensions && sdcErr == 1610)
         {
+            Log.Warn($"SetDisplayConfig returned ERROR_BAD_CONFIGURATION for '{m.FriendlyName}'; retrying with swapped source dimensions");
             ApplyRotation(m, ccdRotation, swapSourceDimensions: true);
             return;
         }

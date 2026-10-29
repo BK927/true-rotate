@@ -107,25 +107,8 @@ internal static class Program
         Console.Error.WriteLine("  TrueRotate diag");
     }
 
-    private static void RunDiag()
-    {
-        Console.WriteLine("TrueRotate — diagnostics");
-        Console.WriteLine($"OS:      {Environment.OSVersion.VersionString} ({(Environment.Is64BitOperatingSystem ? "x64" : "x86")})");
-        Console.WriteLine($"Runtime: .NET {Environment.Version}");
-        Console.WriteLine($"Exe:     {Environment.ProcessPath}");
-        string cfg = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrueRotate", "config.json");
-        Console.WriteLine($"Config:  {cfg} ({(File.Exists(cfg) ? "present" : "missing")})");
-        Console.WriteLine();
-        ListMonitors();
-        if (File.Exists(cfg))
-        {
-            Console.WriteLine();
-            Console.WriteLine("--- config.json ---");
-            try { Console.WriteLine(File.ReadAllText(cfg)); }
-            catch (Exception ex) { Console.WriteLine($"(read failed: {ex.Message})"); }
-        }
-    }
+    // Same report as Settings → "Copy diagnostics", for when the UI can't be opened.
+    private static void RunDiag() => Console.Write(Diagnostics.BuildReport(new OrientationStore()));
 
     private static void ListMonitors()
     {

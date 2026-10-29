@@ -146,6 +146,21 @@
                            TextWrapping="Wrap" Margin="2,0,0,6"/>
                 <StackPanel x:Name="PerMonitorPanel" Spacing="4"/>
 
+                <!-- Support -->
+                <TextBlock x:Name="SecSupport" Text="Support"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
+                           Margin="2,18,0,6"/>
+
+                <local:SettingCard x:Name="CardReport" Header="Report a problem"
+                                       Description="Copy diagnostic info (versions, monitors, recent log), then paste it into a report. Nothing is sent automatically.">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <Button x:Name="BtnCopyDiag" Content="Copy diagnostics" Click="OnCopyDiagnostics"/>
+                        <Button x:Name="BtnReportIssue" Content="Report issue" Click="OnReportIssue"/>
+                    </StackPanel>
+                </local:SettingCard>
+
+                <InfoBar x:Name="SupportBar" IsOpen="False" Severity="Success" IsClosable="True" Margin="0,6,0,0"/>
+
             </StackPanel>
         </ScrollViewer>
 

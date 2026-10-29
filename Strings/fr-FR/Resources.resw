@@ -226,4 +226,24 @@
     <value>TrueRotate — échec de la réapplication</value>
   </data>
 
+  <!-- ── Support section (SettingsWindow) ── -->
+  <data name="SecSupport.Text" xml:space="preserve">
+    <value>Assistance</value>
+  </data>
+  <data name="CardReport.Header" xml:space="preserve">
+    <value>Signaler un problème</value>
+  </data>
+  <data name="CardReport.Description" xml:space="preserve">
+    <value>Copiez les infos de diagnostic (versions, écrans, journal récent), puis collez-les dans votre signalement. Rien n'est envoyé automatiquement.</value>
+  </data>
+  <data name="BtnCopyDiag.Content" xml:space="preserve">
+    <value>Copier le diagnostic</value>
+  </data>
+  <data name="BtnReportIssue.Content" xml:space="preserve">
+    <value>Signaler</value>
+  </data>
+  <data name="DiagCopied" xml:space="preserve">
+    <value>Diagnostic copié dans le presse-papiers. Collez-le dans votre signalement.</value>
+  </data>
+
 </root>

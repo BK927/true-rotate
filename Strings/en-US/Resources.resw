@@ -243,4 +243,24 @@
     <value>TrueRotate — reapply failed</value>
   </data>
 
+  <!-- ── Support section (SettingsWindow) ── -->
+  <data name="SecSupport.Text" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="CardReport.Header" xml:space="preserve">
+    <value>Report a problem</value>
+  </data>
+  <data name="CardReport.Description" xml:space="preserve">
+    <value>Copy diagnostic info (versions, monitors, recent log), then paste it into a report. Nothing is sent automatically.</value>
+  </data>
+  <data name="BtnCopyDiag.Content" xml:space="preserve">
+    <value>Copy diagnostics</value>
+  </data>
+  <data name="BtnReportIssue.Content" xml:space="preserve">
+    <value>Report issue</value>
+  </data>
+  <data name="DiagCopied" xml:space="preserve">
+    <value>Diagnostics copied to the clipboard. Paste them into your report.</value>
+  </data>
+
 </root>
