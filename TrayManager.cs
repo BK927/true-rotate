@@ -49,6 +49,25 @@ internal sealed class TrayManager : IDisposable
 
         // Hook mouse events via the MessageWindow
         _icon.MessageWindow.MouseEventReceived += OnMouseEvent;
+
+        // The core TrayIcon (unlike the WinUI TaskbarIcon wrapper) does not re-add
+        // itself when Explorer restarts; without this the icon vanishes and Settings
+        // becomes unreachable while hotkeys keep working.
+        _icon.MessageWindow.TaskbarCreated += OnTaskbarCreated;
+    }
+
+    private void OnTaskbarCreated(object? sender, EventArgs e)
+    {
+        try
+        {
+            _ = _icon.TryRemove();
+            _icon.Create();
+            Log.Info("Taskbar recreated (Explorer restart); tray icon re-added");
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Re-adding tray icon after Explorer restart failed", ex);
+        }
     }
 
     /// <summary>Loads the embedded app icon (app_icon.ico); kept alive for the tray's lifetime.</summary>
