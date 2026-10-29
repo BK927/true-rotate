@@ -52,6 +52,18 @@ internal sealed class ReapplyController : IDisposable
         _debounce.Start();
     }
 
+    /// <summary>
+    /// Runs one reconcile shortly after launch. A reset that happened before we
+    /// started (e.g. the driver reverting orientation at boot, before autostart)
+    /// never sends us a WM_DISPLAYCHANGE, so without this the screen would stay
+    /// wrong until the next display event or manual rotation.
+    /// </summary>
+    public void CheckAtStartup()
+    {
+        Log.Info("Reapply: startup check");
+        OnDisplayChange();
+    }
+
     private void Reconcile()
     {
         if (!_store.AutoReapply) return;

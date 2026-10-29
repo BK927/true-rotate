@@ -38,6 +38,8 @@ public partial class App : Application
         _hotkeyWindow = new HotkeyWindow(OnHotkey, reapply.OnDisplayChange);
         _tray = new TrayManager(store, _hotkeyWindow, OnOpenSettings, OnExitApp);
         _tray.RegisterHotkeys();
+
+        reapply.CheckAtStartup();
     }
 
     // ── Hotkey dispatch ───────────────────────────────────────────────────────
