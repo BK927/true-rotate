@@ -60,6 +60,23 @@
     <Content Include="Images\**"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
   </ItemGroup>
 
+  <!-- Single version source: Package.appxmanifest's Identity/@Version also stamps the
+       exe (assembly/file version), so unpackaged builds and diagnostics report the
+       same number as the Store package. Bump it only in the manifest. -->
+  <Target Name="TrVersionFromManifest" BeforeTargets="GetAssemblyVersion;GenerateAssemblyInfo">
+    <XmlPeek XmlInputPath="Package.appxmanifest"
+             Query="/x:Package/x:Identity/@Version"
+             Namespaces="&lt;Namespace Prefix='x' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;">
+      <Output TaskParameter="Result" PropertyName="TrManifestVersion" />
+    </XmlPeek>
+    <PropertyGroup>
+      <Version>$(TrManifestVersion)</Version>
+      <AssemblyVersion>$(TrManifestVersion)</AssemblyVersion>
+      <FileVersion>$(TrManifestVersion)</FileVersion>
+      <InformationalVersion>$(TrManifestVersion)</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+
   <!-- TrueRotate uses no AI/ML or Widgets APIs, but WindowsAppSDK self-contained bundles
        their runtime (~40 MB). Strip it from the publish output to shrink the download. -->
   <Target Name="StripUnusedWinAppSdkRuntime" AfterTargets="Publish">
